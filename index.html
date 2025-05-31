@@ -1,367 +1,473 @@
 <!DOCTYPE html>
-<html>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<html lang="en">
 
 <head>
-    <title>I Love You</title>
-    <meta name="Keywords" content="爱心代码，程序员表白">
-    <meta name="Description" content="爱心代码，HTML文件，程序员何未来GitHub爱心代码项目">
-    <!--     github.com/he-weilai/love-code -->
-</head>
+  <meta charset="UTF-8" />
+  <title>Yêu Mỹ Linh</title>
+  <style>
+    html,
+    body {
+      width: 100vw;
+      height: 100vh;
+      margin: 0;
+      padding: 0;
+      overflow: hidden;
+      background: #000;
+    }
 
-<body> <canvas id="canvas"></canvas>
-    <style type="text/css">
-        body {
-            margin: 0;
-            padding: 0;
-            overflow: hidden;
-        }
-    </style>
-    <script type="text/javascript">
-        var canvas = document.getElementById('canvas');
-        var ctx = canvas.getContext('2d');
+    #rain {
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 100vw;
+      height: 100vh;
+      z-index: 0;
+      pointer-events: none;
+    }
 
+    #heart {
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 100vw;
+      height: 100vh;
+      z-index: 1;
+    }
 
-        canvas.height = window.innerHeight;
-        canvas.width = window.innerWidth;
+    #stars {
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 100vw;
+      height: 100vh;
+      z-index: 2;
+      pointer-events: none;
+    }
 
-        var texts = 'I LOVE U'.split('');
+    .sparkle {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      z-index: 3;
+      pointer-events: none;
+      background-image:
+        radial-gradient(circle at 10% 20%, rgba(255, 255, 255, 0.2) 2px, transparent 2px),
+        radial-gradient(circle at 80% 40%, rgba(255, 255, 255, 0.15) 3px, transparent 3px),
+        radial-gradient(circle at 50% 70%, rgba(255, 255, 255, 0.1) 4px, transparent 4px);
+      background-size: 200px 200px, 300px 300px, 400px 400px;
+      animation: sparkle-move 8s linear infinite;
+    }
 
-        var fontSize = 16;
-        var columns = canvas.width / fontSize;
+    @keyframes sparkle-move {
+      0% {
+        background-position: 0 0, 0 0, 0 0;
+      }
 
-        var drops = [];
-        //初始值
-        for (var x = 0; x < columns; x++) {
-            drops[x] = 1;
-        }
+      100% {
+        background-position: -200px -200px, -300px -300px, -400px -400px;
+      }
+    }
 
-        function draw() {
-            //让背景逐渐由透明到不透明
-            ctx.fillStyle = 'rgba(0, 0, 0, 0.05)';
-            ctx.fillRect(0, 0, canvas.width, canvas.height);
-            //文字颜色
-            ctx.fillStyle = '#f584b7';
-            ctx.font = fontSize + 'px arial';
-            //逐行输出文字
-            for (var i = 0; i < drops.length; i++) {
-                var text = texts[Math.floor(Math.random() * texts.length)];
-                ctx.fillText(text, i * fontSize, drops[i] * fontSize);
+    .marquee-container {
+      position: absolute;
+      top: 20px;
+      width: 100vw;
+      z-index: 4;
+      pointer-events: none;
+      overflow: hidden;
+    }
 
-                if (drops[i] * fontSize > canvas.height || Math.random() > 0.95) {
-                    drops[i] = 0;
-                }
+    .marquee-text {
+      display: inline-block;
+      white-space: nowrap;
+      font-size: 2rem;
+      color: #ff4081;
+      text-shadow: 0 0 8px #ff4081cc, 0 0 16px #ff408199, 0 0 24px #ff408166;
+      animation: marquee 10s linear infinite;
+    }
 
-                drops[i]++;
-            }
-        }
-        setInterval(draw, 33);
-    </script>
-</body>
+    @keyframes marquee {
+      from {
+        transform: translateX(100vw);
+      }
 
-</html>
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
-<HTML>
+      to {
+        transform: translateX(-100vw);
+      }
+    }
 
-<HEAD>
-    <TITLE> love</TITLE>
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <META NAME="Generator" CONTENT="EditPlus">
-    <META NAME="Author" CONTENT="">
-    <META NAME="Keywords" CONTENT="">
-    <META NAME="Description" CONTENT="">
-    <meta charset="UTF-8">
-    <style>
-        html,
-        body {
-            height: 100%;
-            padding: 0;
-            margin: 0;
-            background: rgb(0, 0, 0);
-        }
-
-        canvas {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-        }
-
-        #child {
-            position: fixed;
-            top: 50%;
-            left: 50%;
-            margin-top: -75px;
-            margin-left: -100px;
-
-        }
-
-        h4 {
-            font-family: "STKaiti";
-            font-size: 40px;
-            color: #f584b7;
-            position: relative;
-            top: -70px;
-            left: -65px;
-        }
-    </style>
+    audio {
+      display: none;
+    }
+  </style>
 </head>
 
 <body>
-    <div id="child">
-        <h4>💗Mỹ Linh Đáng Yêu</h4>
-    </div>
-    <!--这里写名字❤！！！-->
-    <canvas id="pinkboard"></canvas>
-    <!-- <canvas id= "canvas"></canvas>  -->
-    <script>
-        /*
-       * Settings
-       */
-        var settings = {
-            particles: {
-                length: 500, // maximum amount of particles
-                duration: 2, // particle duration in sec
-                velocity: 100, // particle velocity in pixels/sec
-                effect: -0.75, // play with this for a nice effect
-                size: 30, // particle size in pixels
-            },
+  <canvas id="rain"></canvas>
+  <canvas id="heart"></canvas>
+  <canvas id="stars"></canvas>
+  <div class="sparkle"></div>
+  <div class="marquee-container">
+    <div class="marquee-text">💞 Chúc em bé của Duy 1-6 vui vẻ, mãi mãi bên Duy. Không quà không hoa nhưng mình tặng cả cuộc đời này cho bạn 💞
+  </div>
+  
+<audio controls autoplay loop>
+  <source src="iloveyou.mp3" type="audio/mp3">
+</audio>
+
+
+  <script>
+    // ========== I LOVE U RAIN 3D (không đè trái tim) ==========
+    (() => {
+      const canvas = document.getElementById('rain');
+      const ctx = canvas.getContext('2d');
+      let W = canvas.width = window.innerWidth;
+      let H = canvas.height = window.innerHeight;
+
+      // Vị trí tâm trái tim để tránh cho chữ rơi đè vào
+      const heartCenter = { x: W / 2, y: H / 2 };
+      const heartRadius = Math.min(W, H) * 0.23;
+
+      window.addEventListener('resize', () => {
+        W = canvas.width = window.innerWidth;
+        H = canvas.height = window.innerHeight;
+        heartCenter.x = W / 2;
+        heartCenter.y = H / 2;
+      });
+
+      function randomColor() {
+        const colors = ['#FF0000', '#FF7F00', '#FFD700', '#00FF00', '#00BFFF', '#FF69B4', '#9932CC'];
+        return colors[Math.floor(Math.random() * colors.length)];
+      }
+      function randomFontSize() {
+        return 15 + Math.random() * 10; // Nhỏ hơn
+      }
+      function randomXNotInHeart() {
+        let x, y0, tries = 0;
+        do {
+          x = Math.random() * W;
+          y0 = 0;
+          let dx = (x - heartCenter.x) / heartRadius;
+          let dy = (y0 - heartCenter.y) / heartRadius;
+          let insideHeart =
+            Math.pow(dx * dx + dy * dy - 1, 3) - dx * dx * dy * dy * dy < 0;
+          tries++;
+          if (!insideHeart || tries > 8) break;
+        } while (true);
+        return x;
+      }
+
+      const rainLetters = [];
+      const maxLetters = 10; // Chữ rơi ít
+      for (let i = 0; i < maxLetters; i++) {
+        rainLetters.push({
+          x: randomXNotInHeart(),
+          y: Math.random() * -H,
+          vy: 0.25 + Math.random() * 0.45,
+          fontSize: randomFontSize(),
+          text: randomText(),
+          color: randomColor(),
+          rotate: (Math.random() - 0.5) * 0.7,
+          opacity: 0.85 + Math.random() * 0.2,
+          scale3d: 0.5 + Math.random() * 0.1,
+        });
+      }
+
+      function randomText() {
+        // Tùy ý bạn muốn chữ nào xuất hiện ngẫu nhiên, có thể là nhiều phiên bản
+        const texts = [
+          "I LOVE U",
+          "Love",
+          "❤️",
+          "Duy ❤️ Linh",
+          "💕",
+          "Em bé 1/6",
+          "Yêu em",
+          "Lấy Duy đi",
+          "Will you marry me?",
+          "Em bé ơi",
+          "💗",
+          "Mỹ Linh đáng yêu",
+          "💖",
+          "💞",
+          "Cưới nhau đi",
+          "🍀",
+          "❣️"
+        ];
+        return texts[Math.floor(Math.random() * texts.length)];
+      }
+
+
+      function draw() {
+        ctx.clearRect(0, 0, W, H);
+        for (let l of rainLetters) {
+          let scale = l.scale3d * (0.8 + 0.5 * (l.y / H));
+          ctx.save();
+          ctx.globalAlpha = l.opacity;
+          ctx.font = `bold ${l.fontSize * scale}px 'Arial Black',Arial,sans-serif`;
+          ctx.translate(l.x, l.y);
+          ctx.rotate(l.rotate + Math.sin(l.y / 60) * 0.15);
+          ctx.scale(scale, scale * 1.08);
+          ctx.shadowColor = l.color;
+          ctx.shadowBlur = 12;
+          ctx.fillStyle = l.color;
+          ctx.fillText(l.text, 0, 0);
+          ctx.restore();
+
+          l.y += l.vy + scale * 0.7;
+          if (l.y > H + 40) {
+            l.x = randomXNotInHeart();
+            l.y = Math.random() * -80;
+            l.fontSize = randomFontSize();
+            l.color = randomColor();
+            l.opacity = 0.85 + Math.random() * 0.15;
+            l.scale3d = 0.8 + Math.random() * 0.5;
+            l.rotate = (Math.random() - 0.5) * 0.7;
+          }
+        }
+        requestAnimationFrame(draw);
+      }
+      draw();
+    })();
+
+
+    // ========== HEART EFFECT ==========
+    window.isDevice = (/android|webos|iphone|ipad|ipod|blackberry|iemobile|opera mini/i.test(((navigator.userAgent || navigator.vendor || window.opera)).toLowerCase()));
+    var heartLoaded = false;
+    function initHeart() {
+      if (heartLoaded) return;
+      heartLoaded = true;
+      var mobile = window.isDevice;
+      var koef = mobile ? 0.5 : 1;
+      var canvas = document.getElementById('heart');
+      var ctx = canvas.getContext('2d');
+      var width = (canvas.width = koef * innerWidth);
+      var height = (canvas.height = koef * innerHeight);
+      var rand = Math.random;
+      ctx.fillStyle = 'rgba(0,0,0,0)';
+      ctx.fillRect(0, 0, width, height);
+
+      var heartPosition = function (rad) {
+        return [
+          Math.pow(Math.sin(rad), 3),
+          -(15 * Math.cos(rad) - 5 * Math.cos(2 * rad) - 2 * Math.cos(3 * rad) - Math.cos(4 * rad)),
+        ];
+      };
+      var scaleAndTranslate = function (pos, sx, sy, dx, dy) {
+        return [dx + pos[0] * sx, dy + pos[1] * sy];
+      };
+
+      window.addEventListener('resize', function () {
+        width = (canvas.width = koef * innerWidth);
+        height = (canvas.height = koef * innerHeight);
+        ctx.fillStyle = 'rgba(0,0,0,0)';
+        ctx.fillRect(0, 0, width, height);
+      });
+
+      var traceCount = mobile ? 20 : 50;
+      var pointsOrigin = [];
+      var i;
+      var dr = mobile ? 0.3 : 0.1;
+      for (i = 0; i < Math.PI * 2; i += dr) {
+        pointsOrigin.push(scaleAndTranslate(heartPosition(i), 210, 13, 0, 0));
+      }
+      for (i = 0; i < Math.PI * 2; i += dr) {
+        pointsOrigin.push(scaleAndTranslate(heartPosition(i), 150, 9, 0, 0));
+      }
+      for (i = 0; i < Math.PI * 2; i += dr) {
+        pointsOrigin.push(scaleAndTranslate(heartPosition(i), 90, 5, 0, 0));
+      }
+      var heartPointsCount = pointsOrigin.length;
+
+      var targetPoints = [];
+      var pulse = function (kx, ky) {
+        for (i = 0; i < pointsOrigin.length; i++) {
+          targetPoints[i] = [];
+          targetPoints[i][0] = kx * pointsOrigin[i][0] + width / 2;
+          targetPoints[i][1] = ky * pointsOrigin[i][1] + height / 2;
+        }
+      };
+
+      var e = [];
+      for (i = 0; i < heartPointsCount; i++) {
+        var x = rand() * width;
+        var y = rand() * height;
+        e[i] = {
+          vx: 0,
+          vy: 0,
+          R: 2,
+          speed: rand() + 5,
+          q: ~~(rand() * heartPointsCount),
+          D: 2 * (i % 2) - 1,
+          force: 0.2 * rand() + 0.7,
+          f:
+            'hsla(0,' +
+            ~~(40 * rand() + 60) +
+            '%,' +
+            ~~(60 * rand() + 20) +
+            '%,.8)',
+          trace: [],
         };
+        for (var k = 0; k < traceCount; k++) {
+          e[i].trace[k] = { x: x, y: y };
+        }
+      }
 
-        /*
-         * RequestAnimationFrame polyfill by Erik Möller
-         */
-        (function () { var b = 0; var c = ["ms", "moz", "webkit", "o"]; for (var a = 0; a < c.length && !window.requestAnimationFrame; ++a) { window.requestAnimationFrame = window[c[a] + "RequestAnimationFrame"]; window.cancelAnimationFrame = window[c[a] + "CancelAnimationFrame"] || window[c[a] + "CancelRequestAnimationFrame"] } if (!window.requestAnimationFrame) { window.requestAnimationFrame = function (h, e) { var d = new Date().getTime(); var f = Math.max(0, 16 - (d - b)); var g = window.setTimeout(function () { h(d + f) }, f); b = d + f; return g } } if (!window.cancelAnimationFrame) { window.cancelAnimationFrame = function (d) { clearTimeout(d) } } }());
+      var config = {
+        traceK: 0.4,
+        timeDelta: 0.01,
+      };
 
-        /*
-         * Point class
-         */
-        var Point = (function () {
-            function Point(x, y) {
-                this.x = (typeof x !== 'undefined') ? x : 0;
-                this.y = (typeof y !== 'undefined') ? y : 0;
+      var time = 0;
+      var loopHeart = function () {
+        var n = -Math.cos(time);
+        pulse((1 + n) * 0.5, (1 + n) * 0.5);
+        time +=
+          (Math.sin(time) < 0 ? 9 : n > 0.8 ? 0.2 : 1) * config.timeDelta;
+        ctx.clearRect(0, 0, width, height);
+        for (i = e.length; i--;) {
+          var u = e[i];
+          var q = targetPoints[u.q];
+          var dx = u.trace[0].x - q[0];
+          var dy = u.trace[0].y - q[1];
+          var length = Math.sqrt(dx * dx + dy * dy);
+          if (10 > length) {
+            if (0.95 < rand()) {
+              u.q = ~~(rand() * heartPointsCount);
+            } else {
+              if (0.99 < rand()) {
+                u.D *= -1;
+              }
+              u.q += u.D;
+              u.q %= heartPointsCount;
+              if (0 > u.q) {
+                u.q += heartPointsCount;
+              }
             }
-            Point.prototype.clone = function () {
-                return new Point(this.x, this.y);
-            };
-            Point.prototype.length = function (length) {
-                if (typeof length == 'undefined')
-                    return Math.sqrt(this.x * this.x + this.y * this.y);
-                this.normalize();
-                this.x *= length;
-                this.y *= length;
-                return this;
-            };
-            Point.prototype.normalize = function () {
-                var length = this.length();
-                this.x /= length;
-                this.y /= length;
-                return this;
-            };
-            return Point;
-        })();
+          }
+          u.vx += (-dx / length) * u.speed;
+          u.vy += (-dy / length) * u.speed;
+          u.trace[0].x += u.vx;
+          u.trace[0].y += u.vy;
+          u.vx *= u.force;
+          u.vy *= u.force;
+          for (k = 0; k < u.trace.length - 1;) {
+            var T = u.trace[k];
+            var N = u.trace[++k];
+            N.x -= config.traceK * (N.x - T.x);
+            N.y -= config.traceK * (N.y - T.y);
+          }
+          ctx.fillStyle = u.f;
+          for (k = 0; k < u.trace.length; k++) {
+            ctx.fillRect(u.trace[k].x, u.trace[k].y, 1, 1);
+          }
+        }
+        window.requestAnimationFrame(loopHeart, canvas);
+      };
+      loopHeart();
+    }
+    document.addEventListener('DOMContentLoaded', initHeart);
 
-        /*
-         * Particle class
-         */
-        var Particle = (function () {
-            function Particle() {
-                this.position = new Point();
-                this.velocity = new Point();
-                this.acceleration = new Point();
-                this.age = 0;
-            }
-            Particle.prototype.initialize = function (x, y, dx, dy) {
-                this.position.x = x;
-                this.position.y = y;
-                this.velocity.x = dx;
-                this.velocity.y = dy;
-                this.acceleration.x = dx * settings.particles.effect;
-                this.acceleration.y = dy * settings.particles.effect;
-                this.age = 0;
-            };
-            Particle.prototype.update = function (deltaTime) {
-                this.position.x += this.velocity.x * deltaTime;
-                this.position.y += this.velocity.y * deltaTime;
-                this.velocity.x += this.acceleration.x * deltaTime;
-                this.velocity.y += this.acceleration.y * deltaTime;
-                this.age += deltaTime;
-            };
-            Particle.prototype.draw = function (context, image) {
-                function ease(t) {
-                    return (--t) * t * t + 1;
-                }
-                var size = image.width * ease(this.age / settings.particles.duration);
-                context.globalAlpha = 1 - this.age / settings.particles.duration;
-                context.drawImage(image, this.position.x - size / 2, this.position.y - size / 2, size, size);
-            };
-            return Particle;
-        })();
+    // ========== SHOOTING STARS ==========
 
-        /*
-         * ParticlePool class
-         */
-        var ParticlePool = (function () {
-            var particles,
-                firstActive = 0,
-                firstFree = 0,
-                duration = settings.particles.duration;
+    var starsLoaded = false;
+    function initStars() {
+      if (starsLoaded) return;
+      starsLoaded = true;
+      var canvas = document.getElementById('stars');
+      var ctx = canvas.getContext('2d');
+      var width = (canvas.width = innerWidth);
+      var height = (canvas.height = innerHeight);
+      var shootingStars = [];
+      var rand = Math.random;
+      var starColors = ['#FFFFFF'];
+      window.addEventListener('resize', function () {
+        width = canvas.width = innerWidth;
+        height = canvas.height = innerHeight;
+      });
 
-            function ParticlePool(length) {
-                // create and populate particle pool
-                particles = new Array(length);
-                for (var i = 0; i < particles.length; i++)
-                    particles[i] = new Particle();
-            }
-            ParticlePool.prototype.add = function (x, y, dx, dy) {
-                particles[firstFree].initialize(x, y, dx, dy);
-
-                // handle circular queue
-                firstFree++;
-                if (firstFree == particles.length) firstFree = 0;
-                if (firstActive == firstFree) firstActive++;
-                if (firstActive == particles.length) firstActive = 0;
-            };
-            ParticlePool.prototype.update = function (deltaTime) {
-                var i;
-
-                // update active particles
-                if (firstActive < firstFree) {
-                    for (i = firstActive; i < firstFree; i++)
-                        particles[i].update(deltaTime);
-                }
-                if (firstFree < firstActive) {
-                    for (i = firstActive; i < particles.length; i++)
-                        particles[i].update(deltaTime);
-                    for (i = 0; i < firstFree; i++)
-                        particles[i].update(deltaTime);
-                }
-
-                // remove inactive particles
-                while (particles[firstActive].age >= duration && firstActive != firstFree) {
-                    firstActive++;
-                    if (firstActive == particles.length) firstActive = 0;
-                }
+      function createShootingStar() {
+        var startX = rand() * width * 0.85;
+        var startY = rand() * height * 0.6;
+        var baseLen = 36 + rand() * 38;   // vệt ngắn: 36–74px
+        var speed = 8 + rand() * 3.3;     // di chuyển vừa phải
+        var angle = Math.PI / 4 + (rand() - 0.5) * 0.15; // nhẹ nghiêng
+        var z = 0.9 + rand() * 0.9;
+        var vx = Math.cos(angle) * speed * (1 / z);
+        var vy = Math.sin(angle) * speed * (1 / z);
+        var color = "#fff";
+        shootingStars.push({
+          x: startX, y: startY,
+          baseLen: baseLen, vx: vx, vy: vy, z: z,
+          alpha: 1, color: color,
+          width: 2 + rand() * 1.3,
+          angle: angle // LƯU Ý: lưu góc ở đây
+        });
+      }
 
 
-            };
-            ParticlePool.prototype.draw = function (context, image) {
-                // draw active particles
-                if (firstActive < firstFree) {
-                    for (i = firstActive; i < firstFree; i++)
-                        particles[i].draw(context, image);
-                }
-                if (firstFree < firstActive) {
-                    for (i = firstActive; i < particles.length; i++)
-                        particles[i].draw(context, image);
-                    for (i = 0; i < firstFree; i++)
-                        particles[i].draw(context, image);
-                }
-            };
-            return ParticlePool;
-        })();
-
-        /*
-         * Putting it all together
-         */
-        (function (canvas) {
-            var context = canvas.getContext('2d'),
-                particles = new ParticlePool(settings.particles.length),
-                particleRate = settings.particles.length / settings.particles.duration, // particles/sec
-                time;
-
-            // get point on heart with -PI <= t <= PI
-            function pointOnHeart(t) {
-                return new Point(
-                    160 * Math.pow(Math.sin(t), 3),
-                    130 * Math.cos(t) - 50 * Math.cos(2 * t) - 20 * Math.cos(3 * t) - 10 * Math.cos(4 * t) + 25
-                );
-            }
-
-            // creating the particle image using a dummy canvas
-            var image = (function () {
-                var canvas = document.createElement('canvas'),
-                    context = canvas.getContext('2d');
-                canvas.width = settings.particles.size;
-                canvas.height = settings.particles.size;
-                // helper function to create the path
-                function to(t) {
-                    var point = pointOnHeart(t);
-                    point.x = settings.particles.size / 2 + point.x * settings.particles.size / 350;
-                    point.y = settings.particles.size / 2 - point.y * settings.particles.size / 350;
-                    return point;
-                }
-                // create the path
-                context.beginPath();
-                var t = -Math.PI;
-                var point = to(t);
-                context.moveTo(point.x, point.y);
-                while (t < Math.PI) {
-                    t += 0.01; // baby steps!
-                    point = to(t);
-                    context.lineTo(point.x, point.y);
-                }
-                context.closePath();
-                // create the fill
-                context.fillStyle = '#ea80b0';
-                context.fill();
-                // create the image
-                var image = new Image();
-                image.src = canvas.toDataURL();
-                return image;
-            })();
-
-            // render that thing!
-            function render() {
-                // next animation frame
-                requestAnimationFrame(render);
-
-                // update time
-                var newTime = new Date().getTime() / 1000,
-                    deltaTime = newTime - (time || newTime);
-                time = newTime;
-
-                // clear canvas
-                context.clearRect(0, 0, canvas.width, canvas.height);
-
-                // create new particles
-                var amount = particleRate * deltaTime;
-                for (var i = 0; i < amount; i++) {
-                    var pos = pointOnHeart(Math.PI - 2 * Math.PI * Math.random());
-                    var dir = pos.clone().length(settings.particles.velocity);
-                    particles.add(canvas.width / 2 + pos.x, canvas.height / 2 - pos.y, dir.x, -dir.y);
-                }
-
-                // update and draw particles
-                particles.update(deltaTime);
-                particles.draw(context, image);
-            }
-
-            // handle (re-)sizing of the canvas
-            function onResize() {
-                canvas.width = canvas.clientWidth;
-                canvas.height = canvas.clientHeight;
-            }
-            window.onresize = onResize;
-
-            // delay rendering bootstrap
-            setTimeout(function () {
-                onResize();
-                render();
-            }, 10);
-        })(document.getElementById('pinkboard'));
+      setInterval(function () {
+        createShootingStar(); // luôn tạo 1 sao băng mỗi lần
+        if (rand() < 0.5) createShootingStar(); // thêm xác suất xuất hiện 2 sao cùng lúc
+      }, 420 + rand() * 200); // giảm chu kỳ để dày hơn
 
 
+      function loopStars() {
+        ctx.clearRect(0, 0, width, height);
+        for (var i = shootingStars.length - 1; i >= 0; i--) {
+          var s = shootingStars[i];
+          s.x += s.vx; s.y += s.vy;
+          s.alpha -= 0.018 * (1 / s.z);
+
+          var perspective = 1 / s.z;
+          var len = s.baseLen * perspective;
+          var lineWidth = s.width * perspective;
+          var alphaDraw = s.alpha * perspective;
+
+          // Vẽ đầu sáng
+          ctx.save();
+          ctx.beginPath();
+          ctx.globalAlpha = Math.max(0, alphaDraw * 1.1);
+          ctx.arc(s.x, s.y, 2.2 * perspective, 0, 2 * Math.PI);
+          ctx.fillStyle = s.color;
+          ctx.shadowColor = "#fff";
+          ctx.shadowBlur = 12;
+          ctx.fill();
+          ctx.restore();
+
+          // Vẽ đuôi mờ (gradient)
+          let grad = ctx.createLinearGradient(
+            s.x, s.y,
+            s.x - Math.cos(s.angle) * len,
+            s.y - Math.sin(s.angle) * len
+          );
+          grad.addColorStop(0, "rgba(255,255,255,0.88)");
+          grad.addColorStop(1, "rgba(255,255,255,0)");
+          ctx.save();
+          ctx.globalAlpha = alphaDraw * 0.7;
+          ctx.beginPath();
+          ctx.moveTo(s.x, s.y);
+          ctx.lineTo(
+            s.x - Math.cos(s.angle) * len,
+            s.y - Math.sin(s.angle) * len
+          );
+          ctx.lineWidth = lineWidth;
+          ctx.strokeStyle = grad;
+          ctx.stroke();
+          ctx.restore();
 
 
-    </script>
+          if (s.alpha <= 0 || s.x > width + len || s.y > height + len) shootingStars.splice(i, 1);
+        }
+        requestAnimationFrame(loopStars);
+      }
+      loopStars();
+    }
+    document.addEventListener('DOMContentLoaded', initStars);
 
-</BODY>
-<!--                           
-<audio controls>
-  <source src="Alan Walker-Faded.mp3" type="audio/ogg">
-  <source src="Alan Walker-Faded.mp3" type="audio/mpeg">
-</audio >
-     -->
+  </script>
+</body>
 
-
-</HTML>
+</html>
