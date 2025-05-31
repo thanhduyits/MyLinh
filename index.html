@@ -113,12 +113,15 @@
     <div class="marquee-text">💞 Chúc em bé của Duy 1-6 vui vẻ, mãi mãi bên Duy. Không quà không hoa nhưng mình tặng cả cuộc đời này cho bạn 💞
   </div>
   
-<audio controls autoplay loop>
+<audio id="bgm" loop>
   <source src="iloveyou.mp3" type="audio/mp3">
 </audio>
 
-
   <script>
+    document.body.addEventListener('click', function playMusicOnce() {
+    document.getElementById('bgm').play();
+    document.body.removeEventListener('click', playMusicOnce);
+  });
     // ========== I LOVE U RAIN 3D (không đè trái tim) ==========
     (() => {
       const canvas = document.getElementById('rain');
