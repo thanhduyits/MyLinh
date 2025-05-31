@@ -110,7 +110,7 @@
   <canvas id="stars"></canvas>
   <div class="sparkle"></div>
   <div class="marquee-container">
-    <div class="marquee-text"> 💞Click vào màn hình đi em bé 💞 💞 Chúc em bé của Duy 1-6 vui vẻ, mãi mãi bên Duy. Không quà không hoa nhưng mình tặng cả cuộc đời này cho bạn 💞
+    <div class="marquee-text">💞Click vào màn hình đi Embe💞💞 Chúc em bé của Duy 1-6 vui vẻ, mãi mãi bên Duy. Không quà không hoa nhưng mình tặng cả cuộc đời này cho bạn 💞
   </div>
   
 <audio id="bgm" loop>
@@ -269,10 +269,10 @@
         ctx.fillRect(0, 0, width, height);
       });
 
-      var traceCount = mobile ? 20 : 50;
+      var traceCount = mobile ? 50 : 50;
       var pointsOrigin = [];
       var i;
-      var dr = mobile ? 0.3 : 0.1;
+      var dr = mobile ? 0.05 : 0.05;
       for (i = 0; i < Math.PI * 2; i += dr) {
         pointsOrigin.push(scaleAndTranslate(heartPosition(i), 210, 13, 0, 0));
       }
